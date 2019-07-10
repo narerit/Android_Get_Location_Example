@@ -10,3 +10,6 @@ Informations on the screen will update as location have change.
 Don't forget to stop listener when you finish. Because listener will run in background if you don't fully close your app.
 
 I hope this concept will be useful for your next location base application.  
+
+
+![Alt text](screenshot.png)
