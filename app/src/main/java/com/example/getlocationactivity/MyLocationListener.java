@@ -4,9 +4,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by Narerit on 7/10/2019.
@@ -14,11 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MyLocationListener implements LocationListener {
     final String TAG = "Monitor Location";
 
+    //TODO 1 : Call setLocationInfo method on MainActivity Class when location changed
     @Override
     public void onLocationChanged(Location location) {
         MainActivity.setLocationInfo(location);
         Log.d(TAG, "onLocationChanged!");
-
     }
 
     @Override
