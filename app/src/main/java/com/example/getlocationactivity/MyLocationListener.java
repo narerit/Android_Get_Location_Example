@@ -8,10 +8,11 @@ import android.util.Log;
 /**
  * Created by Narerit on 7/10/2019.
  */
+//TODO 1 : Implementing class form LocationListener Class and get require method for override.
 public class MyLocationListener implements LocationListener {
     final String TAG = "Monitor Location";
 
-    //TODO 1 : Call setLocationInfo method on MainActivity Class when location changed
+    //TODO 2 : Call setLocationInfo method on MainActivity Class when location changed
     @Override
     public void onLocationChanged(Location location) {
         MainActivity.setLocationInfo(location);

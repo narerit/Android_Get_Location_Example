@@ -18,7 +18,7 @@ import androidx.core.app.ActivityCompat;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Monitor Location";
-    //TODO 4 Initialize our location manager and location listener class here as fields
+    //TODO 4 Declare our location manager and location listener class here as fields
     private LocationListener mNetworkListener;
     private LocationManager mLm;
     private static final int REQUEST_LOCATION = 1;
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btn_start = findViewById(R.id.btn_start);
         Button btn_stop = findViewById(R.id.btn_stop);
+
         text_name = findViewById(R.id.text_name);
         text_time = findViewById(R.id.text_time);
         text_latlng = findViewById(R.id.text_latlng);
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //TODO 6 : Don't forget to stop location listening because it will continue running if you doesn't fully close your app
+    //TODO 6 : Don't forget to stop location listening because it will continue running if you don't fully close your app
     void  doStopListening(){
         if (mNetworkListener != null){
             mLm.removeUpdates(mNetworkListener);
