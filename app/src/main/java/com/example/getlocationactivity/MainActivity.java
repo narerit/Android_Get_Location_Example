@@ -19,11 +19,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Monitor Location";
     private static final int REQUEST_LOCATION = 1;
-    //Just in case to show data but it's not prefer to use static with TextView
-    private  TextView text_time;
-    private  TextView text_latLng;
-    private  TextView text_accuracy;
-    private  TextView text_name;
+    private TextView text_time;
+    private TextView text_latLng;
+    private TextView text_accuracy;
+    private TextView text_name;
+    //Cast our location to the field
+    private LocationManager mLm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //TODO 4 : Initialize our location manager and location listener
-    private LocationManager mLm = (LocationManager) getSystemService(LOCATION_SERVICE);
+
     private LocationListener mNetworkListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
@@ -109,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
     //TODO 6 : Create method for binding our location listener with location manager
     @SuppressLint("MissingPermission")
     private void onStartListening() {
+        //init location manager.
+        mLm = (LocationManager) getSystemService(LOCATION_SERVICE);
         Log.d(TAG, "onStartListening: started");
         //binding listener to manager with network provider.
         mLm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mNetworkListener);
