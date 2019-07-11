@@ -9,6 +9,10 @@ Informations on the screen will update as location have change.
 
 Don't forget to stop listener when you finish. Because listener will run in background if you don't fully close your app.
 
+Here is my tutorial blog for this.
+
+https://medium.com/@eros.esteem/simple-location-tracking-on-android-a9afbcad5875
+
 I hope this concept will be useful for your next location base application.  
 
 
