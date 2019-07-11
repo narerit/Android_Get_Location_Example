@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO 1 : At first Require user's location access permission
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        //TODO 7 : Set start and stop listening method into button onclick.
+        //TODO 8 : Set start and stop listening method into button onclick.
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //TODO 2 : Create static method for call on MyLocationListener class to update text view when location change
+    //TODO 2 : Create method for update text view when location change
 
     public void setLocationInfo(Location location) {
         //Extract information from location that we pass from location listener
@@ -73,30 +73,21 @@ public class MainActivity extends AppCompatActivity {
         text_accuracy.setText(accuracy);
 
     }
-    //TODO 3 : Create method to convert ticks into time format
+    //TODO 3 : Create method for convert ticks into time format
     private String timeFormat(Long ticks) {
         String date = DateFormat.format("dd-MM-yyyy HH:mm:ss", ticks).toString();
         return date;
     }
 
 
-
-    //TODO 5 : Create method for binding our location listener with location manager
-    @SuppressLint("MissingPermission")
-    private void onStartListening() {
-
-        Log.d(TAG, "onStartListening: started");
-        mLm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mNetworkListener);
-
-    }
-
-    //TODO 6 : Initialize our location manager and location listener
+    //TODO 4 : Initialize our location manager and location listener
     private LocationManager mLm = (LocationManager) getSystemService(LOCATION_SERVICE);
     private LocationListener mNetworkListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            //TODO 7 : Call text binding method and passing location information into its
+            //TODO 5 : Call text binding method and passing location information into its
             setLocationInfo(location);
+            Log.d(TAG, "Monitor Location - Location Changed");
         }
 
         @Override
@@ -115,7 +106,16 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    //TODO 8 : Don't forget to stop location listening because it will continue running if you don't fully close your app
+    //TODO 6 : Create method for binding our location listener with location manager
+    @SuppressLint("MissingPermission")
+    private void onStartListening() {
+        Log.d(TAG, "onStartListening: started");
+        //binding listener to manager with network provider.
+        mLm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mNetworkListener);
+
+    }
+
+    //TODO 7 : Don't forget to stop location listening because it will continue running if you don't fully close your app
     private void  doStopListening(){
         if (mNetworkListener != null){
             mLm.removeUpdates(mNetworkListener);
