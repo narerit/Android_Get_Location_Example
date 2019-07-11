@@ -18,15 +18,12 @@ import androidx.core.app.ActivityCompat;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Monitor Location";
-    //TODO 4 Declare our location manager and location listener class here as fields
-    private LocationListener mNetworkListener;
-    private LocationManager mLm;
     private static final int REQUEST_LOCATION = 1;
     //Just in case to show data but it's not prefer to use static with TextView
-    private static TextView text_time;
-    private static TextView text_latlng;
-    private static TextView text_accuracy;
-    private static TextView text_name;
+    private  TextView text_time;
+    private  TextView text_latLng;
+    private  TextView text_accuracy;
+    private  TextView text_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         text_name = findViewById(R.id.text_name);
         text_time = findViewById(R.id.text_time);
-        text_latlng = findViewById(R.id.text_latlng);
+        text_latLng = findViewById(R.id.text_latlng);
         text_accuracy = findViewById(R.id.text_accuracy);
 
         //TODO 1 : At first Require user's location access permission
@@ -62,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     //TODO 2 : Create static method for call on MyLocationListener class to update text view when location change
 
-    public static void setLocationInfo(Location location) {
+    public void setLocationInfo(Location location) {
         //Extract information from location that we pass from location listener
         String provider = location.getProvider();
         String lat = String.valueOf(location.getLatitude());
@@ -72,29 +69,54 @@ public class MainActivity extends AppCompatActivity {
         //Set our info into text views
         text_name.setText(provider);
         text_time.setText(time);
-        text_latlng.setText(lat + "," + lng);
+        text_latLng.setText(lat + "," + lng);
         text_accuracy.setText(accuracy);
 
     }
     //TODO 3 : Create method to convert ticks into time format
-    private static String timeFormat(Long ticks) {
+    private String timeFormat(Long ticks) {
         String date = DateFormat.format("dd-MM-yyyy HH:mm:ss", ticks).toString();
         return date;
     }
+
+
 
     //TODO 5 : Create method for binding our location listener with location manager
     @SuppressLint("MissingPermission")
     private void onStartListening() {
 
         Log.d(TAG, "onStartListening: started");
-        mLm = (LocationManager) getSystemService(LOCATION_SERVICE);
-        mNetworkListener = new MyLocationListener();
         mLm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mNetworkListener);
 
     }
 
-    //TODO 6 : Don't forget to stop location listening because it will continue running if you don't fully close your app
-    void  doStopListening(){
+    //TODO 6 : Initialize our location manager and location listener
+    private LocationManager mLm = (LocationManager) getSystemService(LOCATION_SERVICE);
+    private LocationListener mNetworkListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            //TODO 7 : Call text binding method and passing location information into its
+            setLocationInfo(location);
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+            Log.d(TAG, "Monitor Location - Status Change" + s);
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+            Log.d(TAG, "Monitor Location - Provider Enabled" + s);
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+            Log.d(TAG, "Monitor Location - Provider Disable" + s);
+        }
+    };
+
+    //TODO 8 : Don't forget to stop location listening because it will continue running if you don't fully close your app
+    private void  doStopListening(){
         if (mNetworkListener != null){
             mLm.removeUpdates(mNetworkListener);
             Toast.makeText(this, "Successfully Stop Listening.", Toast.LENGTH_SHORT).show();
